@@ -1,4 +1,4 @@
-table.table-bordered.dataTable td:last-child, table.table-bordered.dataTable td:last-child {
+/*table.table-bordered.dataTable td:last-child, table.table-bordered.dataTable td:last-child {
     border-right: 1px solid #dee2e6 !important;
 }
 
@@ -16,4 +16,4 @@ table.table-bordered.dataTable th:first-child, table.table-bordered.dataTable th
 
 table.table-bordered.dataTable th, table.table-bordered.dataTable td {
     vertical-align: middle;
-}
+}*/

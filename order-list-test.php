@@ -35,7 +35,7 @@ if ($db) {
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered"  width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Order Status</th>
@@ -69,15 +69,15 @@ if ($db) {
                                 ?>
                                 <td <?php if ($order_group_count_array[$item_orders['id']]['total_items_per_order'] > 1) echo "rowspan='". $order_group_count_array[$item_orders['id']]['total_items_per_order'] . "'"; ?> style="vertical-align: middle;">
                                     <?php if ($item_orders['status'] == 1): ?>
-                                        <form action="sales-confirm-process.php" method="POST">
+                                        <form action="sales-process.php" method="POST">
                                             <div class="form-group">                                        
                                                 <input type="hidden" name="order_id" value="<?php echo $order_id;?>">
                                                 <input type="submit" name="confirm" class="btn btn-primary btn-sm" value="Confirm">
+                                                <!-- <input type="submit" name="cancel" class="btn btn-primary btn-sm" value="Cancel"> -->
                                             </div>
-                                        </form>
-                                        <form action="order-cancel-process.php" method="POST">
                                             <div class="form-group">                                        
                                                 <input type="hidden" name="order_id" value="<?php echo $order_id;?>">
+                                                <!-- <input type="submit" name="confirm" class="btn btn-primary btn-sm" value="Confirm"> -->
                                                 <input type="submit" name="cancel" class="btn btn-primary btn-sm" value="Cancel">
                                             </div>
                                         </form>

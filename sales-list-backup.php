@@ -34,7 +34,7 @@ if ($db) {
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
+                    <table class="table table-bsalesed" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>                                
                                 <th>Customer Email</th>
@@ -82,7 +82,7 @@ if ($db) {
                                 <td><img src="images/uploads/<?php echo $item_sales['image'];?>" width="auto" height="30px"></td>
                                 <td>
                                     <?php 
-                                    $item_addons_sql = "SELECT addons.title as title FROM sales_addon, addons WHERE sales_addon.addon_id = addons.id AND sales_addon.sales_id=$sales_id AND sales_addon.item_id= $item_id";
+                                    $item_addons_sql = "SELECT addons.title as title FROM sales_addon, addons WHERE sales_addon.addon_id = addons.id AND sales_addon.order_id=$sales_id AND sales_addon.item_id= $item_id";
                                     $item_addons_result = mysqli_query($db,$item_addons_sql);
                                     if (mysqli_num_rows($item_addons_result) > 0) {
                                      while ($addon_name = mysqli_fetch_assoc($item_addons_result)) {
@@ -92,7 +92,7 @@ if ($db) {
                                 </td>
                                 <td>
                                     <?php 
-                                    $item_recipes_sql = "SELECT recipes.title as title FROM sales_recipe, recipes WHERE sales_recipe.recipe_id = recipes.id AND sales_recipe.sales_id=$sales_id AND sales_recipe.item_id= $item_id";
+                                    $item_recipes_sql = "SELECT recipes.title as title FROM sales_recipe, recipes WHERE sales_recipe.recipe_id = recipes.id AND sales_recipe.order_id=$sales_id AND sales_recipe.item_id= $item_id";
                                     $item_recipes_result = mysqli_query($db,$item_recipes_sql);
                                     if (mysqli_num_rows($item_recipes_result) > 0) {
                                      while ($recipe_name = mysqli_fetch_assoc($item_recipes_result)) {

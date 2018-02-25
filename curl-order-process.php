@@ -34,7 +34,8 @@ if(request_is_post()){
 		$addon_price = $addon_total_price['addon_total_price'];
 		// $data['addon_price'][] = $addon_price;
 		$item_price = ($quantity * $unit_price);
-		$order_sql = "INSERT INTO orders(id, customer_id, item_id, quantity, unit_price, item_price, addon_price) VALUES($order_id, $customer_id, $item_id, $quantity, $unit_price, $item_price, $addon_price)";
+		$total_price = $item_price + $addon_price;
+		$order_sql = "INSERT INTO orders(id, customer_id, item_id, quantity, unit_price, item_price, addon_price, total_price) VALUES($order_id, $customer_id, $item_id, $quantity, $unit_price, $item_price, $addon_price, $total_price)";
 		// $data['order_sql'] = $order_sql;
 		mysqli_query($db, $order_sql);
 		if (mysqli_affected_rows($db) > 0 && $flag === true) {
