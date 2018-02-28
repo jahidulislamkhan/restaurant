@@ -5,10 +5,7 @@ include('functions.php');
 $db = db_connect();
 $data = array();
 if (request_is_post()) {
-	// echo file_get_contents('php://input');
-
 	$json_received = json_decode(trim(file_get_contents("php://input")),true);
-
 	$data['login'] = $json_received;
 	$email =  urldecode($json_received['email']);
 	// $data['email'] = $email;
@@ -37,4 +34,4 @@ if (request_is_post()) {
 	
 	// $data["response"] = false;
 }
-// echo json_encode($data);
+echo json_encode($data);

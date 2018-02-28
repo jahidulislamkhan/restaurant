@@ -27,7 +27,7 @@ if (request_is_post()) {
 	    $data['registration']['email'] = "email already registered";
 		// $data['registration']['email'] = 'email already registered';
 	}
-	}
+}
 else {
 	$data['registration']['response'] = false;
 	// $data['registration']['email'] = '';

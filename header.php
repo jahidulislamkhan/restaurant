@@ -62,7 +62,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="sales-report.php">
                                     <i class="fa fa-bar-chart"></i>
                                     <span class="nav-link-text">Sales Report</span>
                                 </a>

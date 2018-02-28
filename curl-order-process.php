@@ -27,12 +27,26 @@ if(request_is_post()){
 		$unit_price = $order['unit_price'];
 		$recipes = $order['recipes'];
 		$addons = $order['addons'];
-		$addons_string = implode(',', $addons);
-		$addon_price_sql = "SELECT SUM(price) as addon_total_price FROM addons WHERE id IN ($addons_string)";
-		$addon_price_query = mysqli_query($db, $addon_price_sql);
-		$addon_total_price = mysqli_fetch_assoc($addon_price_query);
-		$addon_price = $addon_total_price['addon_total_price'];
-		// $data['addon_price'][] = $addon_price;
+		$addons_size = sizeof($addons);
+		if ($addons_size > 0) {
+			$addons_string = "";
+			foreach ($addons as $key => $addon) {
+				if ($key==0) {
+					$addons_string .= $addon['id'];
+				} else {
+					$addons_string .= ",".$addon['id'];
+				}
+			}
+			// $data['addons_string'] = $addons_string;
+			$addon_price_sql = "SELECT SUM(price) as addon_total_price FROM addons WHERE id IN ($addons_string)";
+			// $data['addon_price_sql'][] = $addon_price_sql;
+			$addon_price_query = mysqli_query($db, $addon_price_sql);
+			$addon_total_price = mysqli_fetch_assoc($addon_price_query);
+			$addon_price = $addon_total_price['addon_total_price'];
+			// $data['addon_price'][] = $addon_price;
+		} else {
+			$addon_price = 0;
+		}
 		$item_price = ($quantity * $unit_price);
 		$total_price = $item_price + $addon_price;
 		$order_sql = "INSERT INTO orders(id, customer_id, item_id, quantity, unit_price, item_price, addon_price, total_price) VALUES($order_id, $customer_id, $item_id, $quantity, $unit_price, $item_price, $addon_price, $total_price)";
@@ -40,8 +54,9 @@ if(request_is_post()){
 		mysqli_query($db, $order_sql);
 		if (mysqli_affected_rows($db) > 0 && $flag === true) {
 			foreach ($addons as $addon) {
-				$addon_sql = "INSERT INTO order_addon(order_id, addon_id, item_id) VALUES($order_id, $addon, $item_id)";
+				$addon_sql = "INSERT INTO order_addon(order_id, addon_id, item_id) VALUES($order_id, $addon[id], $item_id)";
 				// $data['addon_query'][] = $addon_sql;
+				// $data['addon'][] = $addon;
 				mysqli_query($db, $addon_sql);
 				if (mysqli_affected_rows($db) < 1 || $flag === false) {
 					$addon_del_sql = "DELETE FROM order_addon WHERE order_id=$order_id";
@@ -53,8 +68,9 @@ if(request_is_post()){
 				}
 			}
 			foreach ($recipes as $recipe) {
-				$recipe_sql = "INSERT INTO order_recipe(order_id, recipe_id, item_id) VALUES($order_id, $recipe, $item_id)";
+				$recipe_sql = "INSERT INTO order_recipe(order_id, recipe_id, item_id) VALUES($order_id, $recipe[id], $item_id)";
 				// $data['recipe_query'][] = $recipe_sql;
+				// $data['recipe'][] = $recipe;
 				mysqli_query($db, $recipe_sql);
 				if (mysqli_affected_rows($db) < 1 || $flag === false) {
 					$recipe_del_sql = "DELETE FROM order_recipe WHERE order_id=$order_id";
@@ -96,7 +112,7 @@ if(request_is_post()){
 		// $data['message'] = $message;
 	}
 } else {
-	$data['response'] = 'failed';
+	$data['response'] = false;
 }
 echo json_encode($data);
 ?>

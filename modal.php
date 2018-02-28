@@ -1,15 +1,9 @@
-<?php include('session.php');?>
-<?php
-    if (!isLoggedIn()) {
-        header("Location: login.php");
-    } else echo "<br>Email: ".$_SESSION['email']."<br>";
-?>
+
 <?php include('header.php');?>
-<?php include('database.php');?>
-<?php 
+<?php include('database.php');
 $db = db_connect();
 if ($db) {
-    $item_order_sql = "SELECT customers.email as email, items.title as title, items.image as image, orders.* FROM orders JOIN customers ON orders.customer_id = customers.id JOIN items ON orders.item_id = items.id WHERE orders.status = 1 GROUP BY orders.id, orders.item_id ORDER BY orders.id ASC";
+    $item_order_sql = "SELECT customers.email as email, items.title as title, items.image as image, orders.* FROM orders JOIN customers ON orders.customer_id = customers.id JOIN items ON orders.item_id = items.id GROUP BY orders.id, orders.item_id ORDER BY orders.id ASC";
 
     $result = mysqli_query($db,$item_order_sql);
 
@@ -23,13 +17,32 @@ if ($db) {
 }
 
 ?>
-
-<!-- input field and items load here -->
-
+?>
 <div class="content-wrapper">
     <div class="container-fluid">
-        <!-- Example DataTables Card-->
-        <div class="card mb-3">
+        <div class="card-header" style="margin-bottom: 10px">
+            <i class="fa fa-table"></i> <strong> Category Input Page</strong>
+        </div>
+
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Order Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+                <div class="modal-body">
+                  <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-table"></i> Order Table
             </div>
@@ -152,5 +165,27 @@ if ($db) {
                 </div>
             </div>
         </div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
+</div>
+
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+      <p>content</p>
+    </div>
+  </div>
+</div> -->
 <?php include('footer.php');?>
